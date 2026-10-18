@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Level UP — Sign-in test</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7f5; --panel: #ffffff; --ink: #14181a; --muted: #5a6468; --line: #d5dad8;
+      --accent: #0b6b57; --accent-ink: #ffffff; --ok: #0b6b57; --bad: #a3261f; --code: #eef1ef;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #101412; --panel: #181d1b; --ink: #eaefec; --muted: #9aa7a2; --line: #2b3431;
+              --accent: #4fc3a1; --accent-ink: #07241c; --ok: #4fc3a1; --bad: #ff8a80; --code: #0d1110; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 40rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+    h1 { font-size: 1.5rem; margin: 0 0 .25rem; letter-spacing: -.01em; }
+    h2 { font-size: 1rem; margin: 0 0 .5rem; }
+    p { margin: .25rem 0 .75rem; }
+    .lede { color: var(--muted); margin-bottom: 1.25rem; }
+    section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; margin: 0 0 1rem; }
+    .status { font-weight: 600; }
+    .status.ok { color: var(--ok); } .status.bad { color: var(--bad); }
+    .actions { display: grid; gap: .5rem; grid-template-columns: 1fr; }
+    @media (min-width: 30rem) { .actions { grid-template-columns: repeat(3, 1fr); } }
+    button { min-height: 48px; padding: .5rem 1rem; font: inherit; font-weight: 600; border-radius: 8px; border: 1px solid var(--accent);
+             background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+    button.secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+    pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: .75rem; margin: .5rem 0 0; overflow-x: auto;
+          white-space: pre-wrap; word-break: break-word; font: .85rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; min-height: 4rem; }
+    .meta { color: var(--muted); font-size: .875rem; }
+    .row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    #signin-button { min-height: 44px; margin: .5rem 0; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Level UP sign-in test</h1>
+  <p class="lede">Phase 0 verification page. It proves that a real Google account can be identified by the server and that data access is enforced there. Use only synthetic data. This is not the app.</p>
+
+  <section aria-labelledby="h-config">
+    <h2 id="h-config">Configuration</h2>
+    <p id="config-status" class="status">Checking…</p>
+    <p class="meta">Set the two values in <code>config.js</code>.</p>
+  </section>
+
+  <section aria-labelledby="h-signin">
+    <h2 id="h-signin">Sign in</h2>
+    <div id="signin-button"></div>
+    <div class="row">
+      <p id="who" class="meta">Not signed in.</p>
+      <button id="signout" class="secondary" disabled>Sign out</button>
+    </div>
+    <p id="token-life" class="meta"></p>
+  </section>
+
+  <section aria-labelledby="h-calls">
+    <h2 id="h-calls">Server calls</h2>
+    <div class="actions">
+      <button id="btn-whoami" disabled>Who am I</button>
+      <button id="btn-routines" disabled>My routines</button>
+      <button id="btn-admin" class="secondary" disabled>Owner: list users</button>
+    </div>
+    <p class="meta" id="latency" aria-live="polite"></p>
+    <pre id="output" aria-live="polite">Nothing yet.</pre>
+  </section>
+
+  <section aria-labelledby="h-expect">
+    <h2 id="h-expect">What good looks like</h2>
+    <p class="meta">Owner: “Who am I” shows role owner; “Owner: list users” succeeds. Invited friend: “Who am I” shows role participant; “Owner: list users” is denied. Any other Google account: every call is denied.</p>
+  </section>
+</main>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>
